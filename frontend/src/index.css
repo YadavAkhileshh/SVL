@@ -1,0 +1,291 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 24 9.8% 10%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 20 14.3% 4.1%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 14%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 14%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 212 72% 59%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  p,
+  span,
+  div,
+  label,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-foreground;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 45 100% 96%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 48 100% 98%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 48 100% 98%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 45 93% 47%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 48 100% 88%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 48 100% 92%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 48 100% 88%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 45 84% 85%;
+    --input: 45 84% 90%;
+    --ring: 45 93% 47%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Professional dark mode matching light mode's yellow/orange theme */
+    /* Base colors - warm dark palette */
+    --background: 222 47% 8%;
+    /* Deep warm dark background */
+    --foreground: 48 12% 95%;
+    /* Warm white text */
+
+    /* Cards - slightly lighter with warm tint */
+    --card: 30 15% 11%;
+    /* Warm dark cards */
+    --card-foreground: 48 12% 95%;
+
+    /* Popover */
+    --popover: 30 15% 11%;
+    --popover-foreground: 48 12% 95%;
+
+    /* Primary - SAME yellow/orange as light mode! */
+    --primary: 45 93% 47%;
+    /* Exact same yellow/orange from light mode */
+    --primary-foreground: 222 47% 8%;
+    /* Dark text on yellow buttons */
+
+    /* Secondary - warm muted */
+    --secondary: 30 12% 16%;
+    /* Warm muted background */
+    --secondary-foreground: 48 12% 95%;
+
+    /* Muted - warm subtle */
+    --muted: 30 12% 14%;
+    --muted-foreground: 48 8% 70%;
+    /* Warm muted text */
+
+    /* Accent - matching theme */
+    --accent: 38 92% 50%;
+    /* Orange accent (complementary to yellow) */
+    --accent-foreground: 222 47% 8%;
+
+    /* Destructive - warm red */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 48 12% 95%;
+
+    /* Borders - warm subtle */
+    --border: 30 15% 18%;
+    /* Warm subtle borders */
+    --input: 30 15% 16%;
+
+    /* Ring - SAME as light mode primary */
+    --ring: 45 93% 47%;
+    /* Yellow/orange ring */
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes glow {
+
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    }
+
+    50% {
+      box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
+    }
+  }
+
+  @keyframes confetti {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateY(100vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes slide-up {
+    0% {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .dark .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .dark .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .animate-confetti {
+    animation: confetti 3s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.5s ease-out;
+  }
+
+  /* Ensure text visibility in dark mode */
+  .dark {
+    color: hsl(0 0% 98%);
+  }
+
+  .dark .text-foreground {
+    color: hsl(0 0% 98%) !important;
+  }
+
+  .dark .text-muted-foreground {
+    color: hsl(0 0% 85%) !important;
+  }
+
+  /* React Flow Dark Mode Styles */
+  .dark .react-flow__node {
+    background: rgb(30 41 59) !important;
+    border-color: rgb(168 85 247) !important;
+    color: white !important;
+  }
+
+  .dark .react-flow__edge-path {
+    stroke: rgb(168 85 247) !important;
+  }
+
+  .dark .react-flow__controls {
+    background: rgb(30 41 59) !important;
+    border-color: rgb(51 65 85) !important;
+  }
+
+  .dark .react-flow__controls button {
+    background: rgb(30 41 59) !important;
+    border-color: rgb(51 65 85) !important;
+    color: white !important;
+  }
+
+  .dark .react-flow__controls button:hover {
+    background: rgb(51 65 85) !important;
+  }
+
+  .dark .react-flow__minimap {
+    background: rgb(30 41 59) !important;
+    border-color: rgb(51 65 85) !important;
+  }
+
+  .dark .react-flow__background {
+    background: rgb(2 6 23) !important;
+  }
+
+  .dark .react-flow__attribution {
+    background: rgb(30 41 59) !important;
+    color: rgb(148 163 184) !important;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
