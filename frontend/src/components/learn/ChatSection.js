@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Send, Loader2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
+import { API_BASE_URL } from '../../config/api';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -20,7 +21,7 @@ const ChatSection = ({ topic }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/learn/chat', {
+      const response = await fetch(`${API_BASE_URL}/learn/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ video_id: 'learn', message: userMessage })

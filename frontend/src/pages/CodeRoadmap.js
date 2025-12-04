@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { API_BASE_URL } from '../config/api';
 import { ArrowLeft, Code, CheckCircle, ExternalLink, Youtube, Globe, Target, Sparkles, Home } from 'lucide-react';
 import { ThemeToggle } from '../components/ui/theme-toggle';
 
@@ -165,7 +166,7 @@ const CodeRoadmap = () => {
     
     setGenerating(true);
     try {
-      const response = await fetch('http://localhost:8000/api/code/generate-custom-roadmap', {
+      const response = await fetch(`${API_BASE_URL}/code/generate-custom-roadmap`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ language: newLanguageName.trim() })

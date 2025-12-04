@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Play, Code2, CheckCircle, ExternalLink, MessageCircle, Loader2, Youtube, Globe } from 'lucide-react';
 import { Button } from '../ui/button';
+import { API_BASE_URL } from '../../config/api';
 import { motion } from 'framer-motion';
 
 const TopicModal = ({ topic, language, isCompleted, onComplete, onClose }) => {
@@ -18,7 +19,7 @@ const TopicModal = ({ topic, language, isCompleted, onComplete, onClose }) => {
   const fetchResources = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/api/code/get-resources', {
+      const response = await fetch(`${API_BASE_URL}/code/get-resources`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -52,7 +53,7 @@ const TopicModal = ({ topic, language, isCompleted, onComplete, onClose }) => {
     setChatLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/code/chat', {
+      const response = await fetch(`${API_BASE_URL}/code/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

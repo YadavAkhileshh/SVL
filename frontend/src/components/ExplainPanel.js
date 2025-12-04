@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2, BookOpen, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { API_BASE_URL } from '../config/api';
 import ReactMarkdown from 'react-markdown';
 
 const ExplainPanel = ({ isOpen, onClose, term, definition }) => {
@@ -20,7 +21,7 @@ const ExplainPanel = ({ isOpen, onClose, term, definition }) => {
         setLoading(true);
         setError('');
         try {
-            const response = await fetch('http://localhost:8000/api/explain-flashcard', {
+            const response = await fetch(`${API_BASE_URL}/explain-flashcard`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 

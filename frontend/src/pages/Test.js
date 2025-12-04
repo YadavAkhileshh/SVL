@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { API_BASE_URL } from '../config/api';
 import { ThemeToggle } from '../components/ui/theme-toggle';
 import { ArrowLeft, Clock, CheckCircle, XCircle, RotateCcw, Trophy, Settings, Sparkles, Star, Brain, MessageCircle, Loader2, RefreshCw } from 'lucide-react';
 import ExplainPanel from '../components/ExplainPanel';
@@ -199,7 +200,7 @@ const Test = () => {
   const generateMoreQuestions = async () => {
     setGenerating(true);
     try {
-      const response = await fetch('http://localhost:8000/api/generate-quiz', {
+      const response = await fetch(`${API_BASE_URL}/generate-quiz`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

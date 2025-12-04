@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Input } from '../components/ui/input';
+import { API_BASE_URL } from '../config/api';
 import { ArrowLeft, Send, MessageCircle, Bot, User, Loader2, Sparkles, Brain, BookOpen } from 'lucide-react';
 import { ThemeToggle } from '../components/ui/theme-toggle';
 
@@ -79,7 +80,7 @@ const AITutor = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/chat', {
+      const response = await fetch(`${API_BASE_URL}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

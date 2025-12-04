@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Loader2, FileText } from 'lucide-react';
 import { Button } from '../ui/button';
+import { API_BASE_URL } from '../../config/api';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -19,7 +20,7 @@ const SummarySection = ({ videoId }) => {
     setError('');
     
     try {
-      const response = await fetch(`http://localhost:8000/api/learn/summary?video_id=${videoId}`, {
+      const response = await fetch(`${API_BASE_URL}/learn/summary?video_id=${videoId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

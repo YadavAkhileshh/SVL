@@ -4,6 +4,7 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { API_BASE_URL } from '../config/api';
 import { ArrowLeft, RotateCcw, ChevronLeft, ChevronRight, List, Layers, Gamepad2, Trophy, Sparkles, Star, CheckCircle, MessageCircle, Zap, Target, Award, Brain, Flame, Plus, Loader2, User } from 'lucide-react';
 import { ThemeToggle } from '../components/ui/theme-toggle';
 import { useAuth } from '../contexts/AuthContext';
@@ -89,7 +90,7 @@ const Flashcards = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:8000/api/generate-flashcards', {
+      const response = await fetch(`${API_BASE_URL}/generate-flashcards`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

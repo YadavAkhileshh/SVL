@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { API_BASE_URL } from '../config/api';
 import { ThemeToggle } from '../components/ui/theme-toggle';
 import { ArrowLeft, Clock, Trash2, Play, BookOpen, Loader2, Youtube, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -57,7 +58,7 @@ const History = () => {
   const regenerateVideo = async (videoUrl) => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8000/api/process-video', {
+      const response = await fetch(`${API_BASE_URL}/process-video`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: videoUrl })

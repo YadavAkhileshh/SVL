@@ -5,6 +5,7 @@ import 'reactflow/dist/style.css';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card } from '../components/ui/card';
+import { API_BASE_URL } from '../config/api';
 import { Search, Loader2, BookOpen, X, MessageCircle, FileText, Video, ArrowLeft, CheckCircle, Target, TrendingUp, Sparkles } from 'lucide-react';
 import { ThemeToggle } from '../components/ui/theme-toggle';
 import VideoModal from '../components/learn/VideoModal';
@@ -25,7 +26,7 @@ const Learn = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/api/learn/generate-roadmap', {
+      const response = await fetch(`${API_BASE_URL}/learn/generate-roadmap`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic: topic.trim() })

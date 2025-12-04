@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Input } from '../components/ui/input';
-
+import { API_BASE_URL } from '../config/api';
 import { Play, BookOpen, Brain, MessageCircle, Loader2, CheckCircle, Sparkles, Star, User, Target, TrendingUp, Code2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { ThemeToggle } from '../components/ui/theme-toggle';
@@ -39,7 +39,7 @@ const Home = () => {
         });
       }, 1500);
 
-      const response = await fetch('http://localhost:8000/api/process-video', {
+      const response = await fetch(`${API_BASE_URL}/process-video`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: url.trim() })

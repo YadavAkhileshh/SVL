@@ -3,6 +3,7 @@ import ReactFlow, { Background, Controls, MiniMap, useNodesState, useEdgesState 
 import 'reactflow/dist/style.css';
 import { CheckCircle, Circle, ExternalLink, Play, Code2, BookOpen } from 'lucide-react';
 import { Button } from '../ui/button';
+import { API_BASE_URL } from '../../config/api';
 import { motion } from 'framer-motion';
 import TopicModal from './TopicModal';
 
@@ -16,7 +17,7 @@ const LearningTree = ({ language, onBack }) => {
   const generateTree = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/api/code/generate-tree', {
+      const response = await fetch(`${API_BASE_URL}/code/generate-tree`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ language: language.id })
