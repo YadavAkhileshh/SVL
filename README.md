@@ -66,3 +66,10 @@ Built with React for the frontend and FastAPI for the backend. Uses Firebase for
 ## Purpose
 
 Final year computer science project demonstrating AI integration in educational technology. Created to help students worldwide learn more effectively from online video content.
+
+## Security
+
+- All API keys are stored in `.env` files (not committed to Git)
+- Firebase handles secure authentication
+- CORS properly configured for production
+- Environment variables used for all sensitive data

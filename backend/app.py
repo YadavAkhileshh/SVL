@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 import re
 import requests
 from typing import List, Dict
@@ -78,6 +78,8 @@ class InfographicRequest(BaseModel):
     video_id: str
 
 class StudyMaterial(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+    
     video_id: str
     title: str
     topic: str
