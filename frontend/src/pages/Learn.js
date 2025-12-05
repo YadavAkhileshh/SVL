@@ -25,6 +25,9 @@ const Learn = () => {
     if (!topic.trim()) return;
 
     setLoading(true);
+    // Reset completion tracking when generating new roadmap
+    setCompletedNodes(new Set());
+    
     try {
       const response = await fetch(`${API_BASE_URL}/learn/generate-roadmap`, {
         method: 'POST',
@@ -36,9 +39,10 @@ const Learn = () => {
       
       const data = await response.json();
 
-      // Create nodes with enhanced visualization
+      // Create unique node IDs based on topic + index to prevent cross-topic completion conflicts
+      const topicPrefix = topic.trim().toLowerCase().replace(/\s+/g, '-');
       const newNodes = data.map((item, index) => ({
-        id: `${index + 1}`,
+        id: `${topicPrefix}-${index + 1}`,
         data: {
           label: (
             <div className="px-4 py-3 text-center relative">
@@ -72,9 +76,9 @@ const Learn = () => {
 
       // Create enhanced edges with animations
       const newEdges = data.slice(1).map((_, index) => ({
-        id: `e${index}-${index + 1}`,
-        source: `${index + 1}`,
-        target: `${index + 2}`,
+        id: `e${topicPrefix}-${index}-${index + 1}`,
+        source: `${topicPrefix}-${index + 1}`,
+        target: `${topicPrefix}-${index + 2}`,
         animated: true,
         style: { stroke: '#f59e0b', strokeWidth: 3 },
         className: 'dark:!stroke-purple-500',
@@ -104,9 +108,8 @@ const Learn = () => {
     setModalContent({
       topic: node.data.topic,
       links: node.data.links,
-      index: node.data.index,
+      nodeId: node.id,
     });
-    setCompletedNodes(prev => new Set([...prev, node.id]));
   }, []);
 
   const markNodeComplete = (nodeId) => {
@@ -314,7 +317,7 @@ const Learn = () => {
           topic={modalContent.topic}
           links={modalContent.links}
           onClose={closeModal}
-          onComplete={() => markNodeComplete(`${modalContent.index + 1}`)}
+          onComplete={() => markNodeComplete(modalContent.nodeId)}
         />
       )}
     </div>

@@ -11,16 +11,16 @@ const VideoModal = ({ topic, links, onClose, onComplete }) => {
   if (!links || links.length === 0) {
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={onClose}>
-        <div className="bg-card p-8 rounded-lg max-w-md" onClick={(e) => e.stopPropagation()}>
-          <h3 className="text-xl font-bold mb-4">No Videos Available</h3>
-          <p className="text-muted-foreground mb-4">No videos found for this topic. Try searching on YouTube directly.</p>
-          <Button onClick={onClose}>Close</Button>
+        <div className="bg-white dark:bg-slate-900 p-8 rounded-lg max-w-md shadow-2xl" onClick={(e) => e.stopPropagation()}>
+          <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white">No Videos Available</h3>
+          <p className="text-slate-600 dark:text-slate-400 mb-4">No videos found for this topic. Try searching on YouTube directly or generate a new roadmap.</p>
+          <Button onClick={onClose} className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 dark:from-purple-600 dark:to-indigo-600 dark:hover:from-purple-700 dark:hover:to-indigo-700">Close</Button>
         </div>
       </div>
     );
   }
 
-  const videoId = links[0]?.split('v=')[1]?.split('&')[0];
+  const videoId = links[0]?.split('v=')[1]?.split('&')[0] || links[0]?.split('youtu.be/')[1]?.split('?')[0];
 
   const renderSection = () => {
     switch (activeSection) {
