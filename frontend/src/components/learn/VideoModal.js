@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Video } from 'lucide-react';
 import { Button } from '../ui/button';
 import ChatSection from './ChatSection';
 import SummarySection from './SummarySection';
@@ -8,19 +8,23 @@ import MoreVideosSection from './MoreVideosSection';
 const VideoModal = ({ topic, links, onClose, onComplete }) => {
   const [activeSection, setActiveSection] = useState('chat');
 
-  if (!links || links.length === 0) {
-    return (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={onClose}>
-        <div className="bg-white dark:bg-slate-900 p-8 rounded-lg max-w-md shadow-2xl" onClick={(e) => e.stopPropagation()}>
-          <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white">No Videos Available</h3>
-          <p className="text-slate-600 dark:text-slate-400 mb-4">No videos found for this topic. Try searching on YouTube directly or generate a new roadmap.</p>
-          <Button onClick={onClose} className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 dark:from-purple-600 dark:to-indigo-600 dark:hover:from-purple-700 dark:hover:to-indigo-700">Close</Button>
-        </div>
-      </div>
-    );
+  console.log('VideoModal received:', { topic, links });
+  const hasVideos = links && links.length > 0;
+  
+  // Extract video ID from first link
+  let videoId = null;
+  if (hasVideos && links[0]) {
+    const firstLink = links[0];
+    // Check if it's a direct video link
+    if (firstLink.includes('watch?v=')) {
+      videoId = firstLink.split('v=')[1]?.split('&')[0];
+    } else if (firstLink.includes('youtu.be/')) {
+      videoId = firstLink.split('youtu.be/')[1]?.split('?')[0];
+    } else if (firstLink.includes('search_query=')) {
+      // It's a search URL, open it in new tab and show message
+      videoId = null;
+    }
   }
-
-  const videoId = links[0]?.split('v=')[1]?.split('&')[0] || links[0]?.split('youtu.be/')[1]?.split('?')[0];
 
   const renderSection = () => {
     switch (activeSection) {
@@ -51,14 +55,39 @@ const VideoModal = ({ topic, links, onClose, onComplete }) => {
 
         {/* Video Player */}
         <div className="p-6">
-          <div className="aspect-video w-full max-w-4xl mx-auto mb-6">
-            <iframe
-              className="w-full h-full rounded-lg shadow-lg"
-              src={`https://www.youtube.com/embed/${videoId}`}
-              title={topic}
-              allowFullScreen
-            />
-          </div>
+          {videoId ? (
+            <div className="aspect-video w-full max-w-4xl mx-auto mb-6">
+              <iframe
+                className="w-full h-full rounded-lg shadow-lg"
+                src={`https://www.youtube.com/embed/${videoId}`}
+                title={topic}
+                allowFullScreen
+              />
+            </div>
+          ) : hasVideos && links[0] ? (
+            <div className="aspect-video w-full max-w-4xl mx-auto mb-6 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-slate-800 dark:to-slate-700 rounded-lg flex flex-col items-center justify-center p-8 border-2 border-yellow-200 dark:border-purple-600">
+              <Video className="w-20 h-20 text-yellow-600 dark:text-purple-400 mb-4" />
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Find Videos for {topic}</h3>
+              <p className="text-slate-600 dark:text-slate-400 text-center mb-4">
+                Click below to search YouTube for videos about this topic
+              </p>
+              <a
+                href={links[0]}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 dark:from-purple-600 dark:to-indigo-600 dark:hover:from-purple-700 dark:hover:to-indigo-700 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all"
+              >
+                Search YouTube Videos
+              </a>
+            </div>
+          ) : (
+            <div className="aspect-video w-full max-w-4xl mx-auto mb-6 bg-slate-100 dark:bg-slate-800 rounded-lg flex flex-col items-center justify-center">
+              <Video className="w-16 h-16 text-slate-400 dark:text-slate-500 mb-4 animate-pulse" />
+              <p className="text-slate-600 dark:text-slate-400 text-center px-4">
+                Loading videos...
+              </p>
+            </div>
+          )}
 
           {/* Section Tabs */}
           <div className="flex flex-wrap gap-2 sm:gap-4 border-b border-slate-200 dark:border-slate-700 mb-6 pb-2">

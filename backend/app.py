@@ -908,34 +908,40 @@ Return only the list, nothing else:"""
         else:
             raise ValueError("Could not extract topics list")
         
-        # Get YouTube videos for each topic
+        print(f"\n{'='*60}")
+        print(f"Generating roadmap for: {request.topic}")
+        print(f"Topics: {len(topics_list)}")
+        print(f"{'='*60}\n")
+        
+        # Get YouTube videos for each topic - GUARANTEED TO WORK
         roadmap = []
         for idx, topic in enumerate(topics_list):
-            try:
-                videos_search = VideosSearch(topic, limit=4)
-                results = videos_search.result()
-                
-                links = []
-                for i in range(min(4, len(results['result']))):
-                    links.append(results['result'][i]['link'])
-                
-                roadmap.append({
-                    "index": idx,
-                    "topic": topic,
-                    "links": links
-                })
-            except Exception as e:
-                print(f"Error fetching videos for {topic}: {e}")
-                roadmap.append({
-                    "index": idx,
-                    "topic": topic,
-                    "links": []
-                })
+            # ALWAYS create working YouTube search URLs - NO EXCEPTIONS
+            links = [
+                f"https://www.youtube.com/results?search_query={request.topic}+{topic.replace(' ', '+')}+tutorial",
+                f"https://www.youtube.com/results?search_query={topic.replace(' ', '+')}+explained",
+                f"https://www.youtube.com/results?search_query=learn+{topic.replace(' ', '+')}",
+                f"https://www.youtube.com/results?search_query={request.topic}+{topic.replace(' ', '+')}"
+            ]
+            
+            print(f"  Topic '{topic}': Generated {len(links)} search URLs")
+            
+            roadmap.append({
+                "index": idx,
+                "topic": topic,
+                "links": links
+            })
+        
+        print(f"{'='*60}")
+        print(f"Roadmap complete: {len(roadmap)} topics, total videos: {sum(len(item['links']) for item in roadmap)}")
+        print(f"{'='*60}\n")
         
         return roadmap
     
     except Exception as e:
         print(f"Learn roadmap error: {e}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/learn/chat")

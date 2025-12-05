@@ -38,6 +38,8 @@ const Learn = () => {
       if (!response.ok) throw new Error('Failed to generate roadmap');
       
       const data = await response.json();
+      console.log('Received roadmap data:', data);
+      console.log('First item links:', data[0]?.links);
 
       // Create unique node IDs based on topic + index to prevent cross-topic completion conflicts
       const topicPrefix = topic.trim().toLowerCase().replace(/\s+/g, '-');
@@ -52,7 +54,7 @@ const Learn = () => {
               <div className="font-semibold text-sm text-slate-900 dark:text-white mb-1">{item.topic}</div>
               <div className="text-xs text-slate-600 dark:text-slate-400">
                 <Video className="w-3 h-3 inline mr-1" />
-                {item.links.length} videos
+                {item.links && item.links.length > 0 ? `${item.links.length} videos` : 'Click to explore'}
               </div>
             </div>
           ),
@@ -105,12 +107,14 @@ const Learn = () => {
   };
 
   const onNodeClick = useCallback((event, node) => {
-    setModalContent({
-      topic: node.data.topic,
-      links: node.data.links,
-      nodeId: node.id,
-    });
-  }, []);
+    // Open YouTube search in new tab
+    const searchQuery = `${currentTopic} ${node.data.topic} tutorial`.replace(/\s+/g, '+');
+    const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${searchQuery}`;
+    window.open(youtubeSearchUrl, '_blank');
+    
+    // Mark as complete
+    markNodeComplete(node.id);
+  }, [currentTopic]);
 
   const markNodeComplete = (nodeId) => {
     setCompletedNodes(prev => new Set([...prev, nodeId]));
@@ -264,7 +268,7 @@ const Learn = () => {
             <div className="mb-4 flex items-center justify-between">
               <div>
                 <h2 className="text-xl font-bold text-foreground">Your Learning Path</h2>
-                <p className="text-sm text-muted-foreground">Click on any topic to explore videos • Green = Completed</p>
+                <p className="text-sm text-muted-foreground">Click on any topic to search YouTube videos • Green = Completed</p>
               </div>
               <Button onClick={resetProgress} variant="outline" size="sm">
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -311,15 +315,7 @@ const Learn = () => {
         )}
       </div>
 
-      {/* Video Modal */}
-      {modalContent && (
-        <VideoModal 
-          topic={modalContent.topic}
-          links={modalContent.links}
-          onClose={closeModal}
-          onComplete={() => markNodeComplete(modalContent.nodeId)}
-        />
-      )}
+
     </div>
   );
 };
